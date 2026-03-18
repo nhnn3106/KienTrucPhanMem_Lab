@@ -1,0 +1,72 @@
+@import url("https://fonts.googleapis.com/css2?family=Fraunces:wght@400;600;700&family=Space+Grotesk:wght@400;500;600&display=swap");
+
+:root {
+  --ink: #1f1a12;
+  --muted: #6b5f4d;
+  --bg: #f7f1e5;
+  --bg-strong: #f1d7b3;
+  --card: #fff9ef;
+  --border: #e6d6bd;
+  --accent: #d44c2d;
+  --accent-dark: #9a2f1d;
+  --accent-soft: #f3d2c6;
+  --success: #2f6d46;
+  --shadow: 0 18px 40px rgba(46, 34, 18, 0.18);
+  --shadow-soft: 0 12px 24px rgba(46, 34, 18, 0.12);
+  --font-body: "Space Grotesk", "Segoe UI", sans-serif;
+  --font-heading: "Fraunces", "Times New Roman", serif;
+
+  font: 16px/1.6 var(--font-body);
+  color: var(--ink);
+  background: var(--bg);
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100svh;
+  background:
+    radial-gradient(circle at top left, #fff3df 0%, transparent 45%),
+    radial-gradient(circle at 80% 20%, #f3c7a7 0%, transparent 45%),
+    linear-gradient(160deg, var(--bg), #f6e8cf 70%);
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background: repeating-linear-gradient(
+    -45deg,
+    rgba(255, 255, 255, 0.2),
+    rgba(255, 255, 255, 0.2) 1px,
+    transparent 1px,
+    transparent 12px
+  );
+  opacity: 0.25;
+  pointer-events: none;
+  z-index: 0;
+}
+
+#root {
+  position: relative;
+  z-index: 1;
+  min-height: 100svh;
+}
+
+h1,
+h2,
+h3 {
+  font-family: var(--font-heading);
+  margin: 0 0 8px;
+  letter-spacing: -0.5px;
+}
+
+p {
+  margin: 0;
+}

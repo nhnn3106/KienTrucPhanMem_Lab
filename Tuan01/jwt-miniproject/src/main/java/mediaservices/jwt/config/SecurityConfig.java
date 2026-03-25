@@ -25,7 +25,7 @@ public class SecurityConfig {
 
                 // 2. Configure Authorization
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/register").permitAll() // Replaces antMatchers
+                        .requestMatchers("/register", "/login").permitAll() // Replaces antMatchers
                         .anyRequest().authenticated()
                 )
 

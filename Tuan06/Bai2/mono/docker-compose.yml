@@ -1,0 +1,15 @@
+version: "3.8"
+services:
+  mongodb:
+    image: mongo:latest
+    container_name: my_mongodb
+    ports:
+      - "27017:27017" # Map cổng từ container ra máy thật
+    volumes:
+      - mongo_data:/data/db # Lưu dữ liệu để không bị mất khi xóa container
+    environment:
+      # Nếu muốn đặt user/pass thì thêm ở đây, mặc định là không có
+      - MONGO_INITDB_DATABASE=mono_products
+
+volumes:
+  mongo_data:

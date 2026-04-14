@@ -3,9 +3,10 @@ server:
 
 spring:
   datasource:
-    url: jdbc:postgresql://localhost:5432/bai3
+    url: jdbc:postgresql://localhost:5432/bai2
     username: postgres
     password: postgres
+
   jpa:
     hibernate:
       ddl-auto: validate

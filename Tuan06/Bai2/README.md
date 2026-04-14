@@ -1,54 +1,56 @@
-# Product Management Apps
+# Bai 3 - Demo DB Sharding, Vertical, Functional
 
-This workspace contains two implementations of the same basic product management features.
+## Muc tieu
 
-## Mono (monolith)
+- DB: 2 table `table_user_01` va `table_user_02` theo dieu kien gioi tinh (nam -> 01, nu -> 02).
+- Vertical: mo phong theo feature (user, auth).
+- Functional: mo phong theo tang chuc nang (domain, application, infrastructure, interface).
+- Tang performance: goi y index, read-only transaction, tach bang.
 
-Structure:
+## Yeu cau
 
-- mono/client (React)
-- mono/server (NodeJS + Express + MongoDB)
+- JDK 17+
+- PostgreSQL
 
-Run:
+## Cau hinh DB
 
-1. Start MongoDB locally.
-2. In mono/server:
-   - Copy .env.example to .env and adjust if needed.
-   - Install and run:
-     - npm install
-     - npm run dev
-3. In mono/client:
-   - npm install
-   - npm run dev
+Cap nhat thong tin DB trong file [src/main/resources/application.yml](src/main/resources/application.yml).
 
-The UI runs on http://localhost:3000 and proxies API calls to http://localhost:3001.
+## Chay ung dung
 
-## Service-based
+```bash
+mvn spring-boot:run
+```
 
-Structure:
+## API mau
 
-- service-based/client (React)
-- service-based/gateway (API Gateway)
-- service-based/product-service (Product CRUD)
-- service-based/inventory-service (Stock by productId)
+### Sharding
 
-Run:
+- POST /api/sharded/users
 
-1. Start MongoDB locally.
-2. In service-based/product-service:
-   - Copy .env.example to .env and adjust if needed.
-   - npm install
-   - npm run dev
-3. In service-based/inventory-service:
-   - Copy .env.example to .env and adjust if needed.
-   - npm install
-   - npm run dev
-4. In service-based/gateway:
-   - Copy .env.example to .env and adjust if needed.
-   - npm install
-   - npm run dev
-5. In service-based/client:
-   - npm install
-   - npm run dev
+```json
+{ "name": "An", "email": "an@example.com", "gender": "MALE" }
+```
 
-The UI runs on http://localhost:3000 and proxies to the gateway on http://localhost:3001.
+- GET /api/sharded/users/MALE/1
+- GET /api/sharded/users
+
+### Vertical
+
+- POST /api/vertical/users
+- GET /api/vertical/users/1
+- GET /api/vertical/users
+- POST /api/vertical/auth/login
+
+### Functional
+
+- POST /api/functional/users
+- GET /api/functional/users/1
+- GET /api/functional/users
+
+## Goi y tang performance
+
+- Tach bang theo dieu kien de giam kich thuoc moi bang.
+- Index tren cot `email` de tra cuu nhanh.
+- Su dung `@Transactional(readOnly = true)` cho query chi doc.
+- Neu luong du lieu lon, co the them paging hoac cache.

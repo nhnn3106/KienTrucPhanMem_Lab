@@ -1,56 +1,54 @@
-# Bai 3 - Demo DB Sharding, Vertical, Functional
+# Product Management Apps
 
-## Muc tieu
+This workspace contains two implementations of the same basic product management features.
 
-- DB: 2 table `table_user_01` va `table_user_02` theo dieu kien gioi tinh (nam -> 01, nu -> 02).
-- Vertical: mo phong theo feature (user, auth).
-- Functional: mo phong theo tang chuc nang (domain, application, infrastructure, interface).
-- Tang performance: goi y index, read-only transaction, tach bang.
+## Mono (monolith)
 
-## Yeu cau
+Structure:
 
-- JDK 17+
-- PostgreSQL
+- mono/client (React)
+- mono/server (NodeJS + Express + MongoDB)
 
-## Cau hinh DB
+Run:
 
-Cap nhat thong tin DB trong file [src/main/resources/application.yml](src/main/resources/application.yml).
+1. Start MongoDB locally.
+2. In mono/server:
+   - Copy .env.example to .env and adjust if needed.
+   - Install and run:
+     - npm install
+     - npm run dev
+3. In mono/client:
+   - npm install
+   - npm run dev
 
-## Chay ung dung
+The UI runs on http://localhost:3000 and proxies API calls to http://localhost:3001.
 
-```bash
-mvn spring-boot:run
-```
+## Service-based
 
-## API mau
+Structure:
 
-### Sharding
+- service-based/client (React)
+- service-based/gateway (API Gateway)
+- service-based/product-service (Product CRUD)
+- service-based/inventory-service (Stock by productId)
 
-- POST /api/sharded/users
+Run:
 
-```json
-{ "name": "An", "email": "an@example.com", "gender": "MALE" }
-```
+1. Start MongoDB locally.
+2. In service-based/product-service:
+   - Copy .env.example to .env and adjust if needed.
+   - npm install
+   - npm run dev
+3. In service-based/inventory-service:
+   - Copy .env.example to .env and adjust if needed.
+   - npm install
+   - npm run dev
+4. In service-based/gateway:
+   - Copy .env.example to .env and adjust if needed.
+   - npm install
+   - npm run dev
+5. In service-based/client:
+   - npm install
+   - npm run dev
 
-- GET /api/sharded/users/MALE/1
-- GET /api/sharded/users
-
-### Vertical
-
-- POST /api/vertical/users
-- GET /api/vertical/users/1
-- GET /api/vertical/users
-- POST /api/vertical/auth/login
-
-### Functional
-
-- POST /api/functional/users
-- GET /api/functional/users/1
-- GET /api/functional/users
-
-## Goi y tang performance
-
-- Tach bang theo dieu kien de giam kich thuoc moi bang.
-- Index tren cot `email` de tra cuu nhanh.
-- Su dung `@Transactional(readOnly = true)` cho query chi doc.
-- Neu luong du lieu lon, co the them paging hoac cache.
+The UI runs on http://localhost:3000 and proxies to the gateway on http://localhost:3001.
